@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>Dimensions</Name>
+    <Name>Facts</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{8e708571-fff3-4ff6-958f-fdccdb073326}</ProjectGuid>
+    <ProjectGuid>{d7f5fa65-1679-40a8-aed8-04650163cbe1}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>Dimensions</RootNamespace>
-    <AssemblyName>Dimensions</AssemblyName>
+    <RootNamespace>Facts</RootNamespace>
+    <AssemblyName>Facts</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
@@ -57,11 +57,26 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="ReferencedDacpac" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="DimDate.sql" />
+    <ProjectReference Include="..\Dimensions\Dimensions.sqlproj">
+      <Name>Dimensions</Name>
+      <Project>{8e708571-fff3-4ff6-958f-fdccdb073326}</Project>
+      <Private>True</Private>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="PopulateSomeDates.sql" />
+    <Build Include="FactSales.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReferencedDacpac\CustomerDim.dacpac" />
+  </ItemGroup>
+  <ItemGroup>
+    <ArtifactReference Include="ReferencedDacpac\CustomerDim.dacpac">
+      <HintPath>ReferencedDacpac\CustomerDim.dacpac</HintPath>
+      <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
+    </ArtifactReference>
   </ItemGroup>
 </Project>
